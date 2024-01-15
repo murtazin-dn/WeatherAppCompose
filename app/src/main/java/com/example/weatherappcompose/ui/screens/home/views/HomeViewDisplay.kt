@@ -1,6 +1,9 @@
 package com.example.weatherappcompose.ui.screens.home.views
 
+import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,15 +12,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,9 +45,14 @@ import com.example.weatherappcompose.ui.model.base.Forecastday
 import com.example.weatherappcompose.ui.model.base.Hour
 import com.example.weatherappcompose.ui.model.base.Location
 import com.example.weatherappcompose.ui.screens.home.model.HomeViewState
-import com.example.weatherappcompose.ui.theme.interFamily
+import com.example.weatherappcompose.ui.theme.Linear1
+import com.example.weatherappcompose.ui.theme.Linear2
+import com.example.weatherappcompose.ui.theme.PrimaryDark
+import com.example.weatherappcompose.ui.theme.SecondaryDark
+import com.example.weatherappcompose.ui.theme.Typography
+import com.example.weatherappcompose.ui.theme.seProDisplayFamily
 import com.example.weatherappcompose.ui.utils.ext.dateToDate
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeViewDisplay(
     state: HomeViewState.WeatherLoaded
@@ -46,86 +60,91 @@ fun HomeViewDisplay(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
+        val scaffoldState = rememberBottomSheetScaffoldState()
         Image(
-            painter = painterResource(id = R.drawable.wp_minimalist_sunset_wallpapers),
-            contentDescription = "Wallpaper",
+            modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
+            painter = painterResource(id = R.drawable.background),
+            contentDescription = null,
+        )
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 100.dp),
+            painter = painterResource(id = R.drawable.background_house),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth
         )
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.verticalScroll(rememberScrollState())
         ) {
-            Row(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp)
-            ){
-                Icon(
-                    modifier = Modifier.width(40.dp),
-                    painter = painterResource(id = R.drawable.ic_hamburger),
-                    contentDescription = "Hamburger",
-                    tint = Color.White
-                )
-                Column(
-                    Modifier.weight(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Row() {
-                        Text(
-                            color = Color.White,
-                            fontFamily = interFamily,
-                            fontWeight = FontWeight.Medium,
-                            fontSize = 17.sp,
-                            text = state.weather.location.region
-                        )
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_expand_more),
-                            contentDescription = "Expand more",
-                            tint = Color.White
-                        )
-                    }
-                    Text(
-                        modifier = Modifier.padding(top = 10.dp),
-                        fontFamily = interFamily,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 16.sp,
-                        color = Color.White,
-                        text = state.weather.current.last_updated.dateToDate()
-                    )
-                }
-                Box(modifier = Modifier.width(50.dp))
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 100.dp),
-                horizontalArrangement = Arrangement.Center
-
+                    .fillMaxSize()
+                    .padding(top = 51.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    fontFamily = interFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 160.sp,
-                    color = Color.White,
-                    text = state.weather.current.temp_c.toInt().toString()
+                    style = Typography.titleLarge.copy(color = PrimaryDark),
+                    text = state.weather.location.region,
                 )
                 Text(
-                    modifier = Modifier.padding(top = 30.dp),
-                    fontFamily = interFamily,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 70.sp,
                     color = Color.White,
-                    text = "°"
+                    fontFamily = seProDisplayFamily,
+                    fontWeight = FontWeight.Thin,
+                    fontSize = 96.sp,
+                    lineHeight = 70.sp,
+                    letterSpacing = 0.37.sp,
+                    text = "${ state.weather.current.temp_c.toInt() }°"
                 )
+                Text(
+                    style = Typography.titleSmall.copy(color = SecondaryDark),
+                    text = state.weather.current.condition.text
+                )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        style = Typography.titleSmall.copy(color = PrimaryDark),
+                        text = "H:${state.weather.forecast.forecastday.first().day.maxtemp_c.toInt()}°"
+                    )
+                    Box(modifier = Modifier.width(15.dp))
+                    Text(
+                        style = Typography.titleSmall.copy(color = PrimaryDark),
+                        text = "L:${state.weather.forecast.forecastday.first().day.mintemp_c.toInt()}°"
+                    )
+                }
             }
-
         }
 
+        BottomSheetScaffold(
+            scaffoldState = scaffoldState,
+            sheetContent = {
+//                Box(
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .background(
+//                            brush = Brush.verticalGradient(
+//                                colors = listOf(Linear1, Linear2)
+//                            )
+//                        )
+//                ){
+//
+//                }
+            },
+            sheetContainerColor = Linear2,
+            sheetPeekHeight = 325.dp
+        ){
+
+        }
     }
 }
 
+@Preview(
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-@Preview
 fun HomeViewDisplay_Preview() {
     HomeViewDisplay(
         state = data
