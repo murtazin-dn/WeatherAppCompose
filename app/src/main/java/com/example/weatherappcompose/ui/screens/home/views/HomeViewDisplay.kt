@@ -1,7 +1,6 @@
 package com.example.weatherappcompose.ui.screens.home.views
 
 import android.content.res.Configuration
-import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,25 +9,39 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherappcompose.R
@@ -45,13 +58,13 @@ import com.example.weatherappcompose.ui.model.base.Forecastday
 import com.example.weatherappcompose.ui.model.base.Hour
 import com.example.weatherappcompose.ui.model.base.Location
 import com.example.weatherappcompose.ui.screens.home.model.HomeViewState
-import com.example.weatherappcompose.ui.theme.Linear1
+import com.example.weatherappcompose.ui.theme.Black30
 import com.example.weatherappcompose.ui.theme.Linear2
 import com.example.weatherappcompose.ui.theme.PrimaryDark
 import com.example.weatherappcompose.ui.theme.SecondaryDark
 import com.example.weatherappcompose.ui.theme.Typography
 import com.example.weatherappcompose.ui.theme.seProDisplayFamily
-import com.example.weatherappcompose.ui.utils.ext.dateToDate
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeViewDisplay(
@@ -61,6 +74,10 @@ fun HomeViewDisplay(
         modifier = Modifier.fillMaxSize()
     ) {
         val scaffoldState = rememberBottomSheetScaffoldState()
+        val tabItems = listOf("Hourly Forecast", "Weekly Forecast")
+        var selectedTabIndex by remember {
+            mutableIntStateOf(0)
+        }
         Image(
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop,
@@ -134,12 +151,89 @@ fun HomeViewDisplay(
 //                }
             },
             sheetContainerColor = Linear2,
-            sheetPeekHeight = 325.dp
+            sheetPeekHeight = 325.dp,
+            sheetShape = RoundedCornerShape(topStart = 44.dp, topEnd = 44.dp),
+            sheetDragHandle = {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Surface(
+                        modifier = Modifier
+                            .padding(vertical = 8.dp),
+                        color = Black30,
+                        shape = MaterialTheme.shapes.extraLarge
+                    ) {
+                        Box(
+                            Modifier
+                                .size(
+                                    width = 48.dp,
+                                    height = 5.dp
+                                )
+                        )
+                    }
+                    TabRow(
+                        selectedTabIndex = selectedTabIndex,
+                        containerColor = Color.Transparent,
+                        divider = {
+                            Divider(
+                                thickness = 1.dp,
+                                color = Color(0x4DFFFFFF)
+                            )
+                        },
+                        indicator = @Composable { tabPositions ->
+                            if (selectedTabIndex < tabPositions.size) {
+                                TabRowIndicator(
+                                    Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex])
+                                )
+                            }
+                        }
+                    ) {
+                        tabItems.forEachIndexed { index, item ->
+                            Tab(
+                                modifier = Modifier.height(30.dp),
+                                selected = index == selectedTabIndex,
+                                onClick = {
+                                    selectedTabIndex = index
+                                },
+                                text = {
+                                    Text(
+                                        style = Typography.bodySmall.copy(color = SecondaryDark),
+                                        text = item
+                                    )
+                                }
+                            )
+                        }
+                    }
+                }
+
+            }
         ){
 
         }
     }
 }
+
+@Composable
+fun TabRowIndicator(
+    modifier: Modifier,
+    height: Dp = 3.dp
+){
+    Box(
+        modifier
+            .fillMaxWidth()
+            .height(height)
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0x00FFFFFF),
+                        Color(0x4DFFFFFF),
+                        Color(0x00FFFFFF)
+                    )
+                )
+            )
+    )
+}
+
 
 @Preview(
     showSystemUi = true,

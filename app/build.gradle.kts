@@ -72,6 +72,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
 
 
+
+
     implementation ("androidx.compose.runtime:runtime-livedata:1.5.4")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

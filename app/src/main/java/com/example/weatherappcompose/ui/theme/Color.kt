@@ -21,4 +21,6 @@ val QuaternaryDark = Color(0x2EEBEBF5)
 val SecondaryDark = Color(0x99EBEBF5)
 
 val Linear1 = Color(0xFF422E5A)
-val Linear2 = Color(0xE61C1B33)
+val Linear2 = Color(0xFF1C1B33)
+
+val Black30 = Color(0x4D000000)
