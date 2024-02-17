@@ -1,0 +1,124 @@
+{
+  ConstraintSets: {
+    start: {
+      city_text: {
+        width: 'wrap',
+        height: 'wrap',
+        start: ['parent', 'start'],
+        end: ['parent', 'end'],
+        top: ['box', 'top', 51],
+        centerHorizontally: 'parent',
+
+      },
+      temp_text: {
+        width: 'wrap',
+        height: 'wrap',
+        start: ['box', 'start',0],
+        end: ['box', 'end',0],
+        top: ['city_text', 'bottom',0],
+        centerHorizontally: 'parent',
+        custom: {
+          textSize: 96,
+          textWeight: 100
+        }
+      },
+      label_text: {
+        width: 'wrap',
+        height: 'wrap',
+        start: ['box', 'start',0],
+        end: ['box', 'end',0],
+        top: ['temp_text', 'bottom',0],
+        centerHorizontally: 'parent'
+
+      },
+      divider: {
+        width: 'wrap',
+        height: 'wrap',
+        top: ['city_text', 'bottom', 0],
+        end: ['label_text', 'start', 0],
+        alpha: 0.0,
+      },
+      hl_temp_text: {
+        width: 'wrap',
+        height: 'wrap',
+        start: ['box', 'start',0],
+        end: ['box', 'end',0],
+        top: ['label_text', 'bottom',0],
+        centerHorizontally: 'parent',
+        alpha: 1.0,
+      },
+      box: {
+        width: 'spread',
+        height: 'spread',
+        start: ['parent', 'start'],
+        end: ['parent', 'end'],
+        top: ['parent', 'top'],
+        bottom: ['parent', 'bottom'],
+        custom: {
+          color: '#001C1B33'
+        }
+      }
+    },
+    end: {
+      city_text: {
+        width: 'wrap',
+        height: 'wrap',
+        start: ['box', 'start'],
+        end: ['box', 'end'],
+        top: ['box', 'top'],
+        centerHorizontally: 'parent'
+      },
+      temp_text: {
+        width: 'wrap',
+        height: 'wrap',
+        top: ['city_text', 'bottom', 0],
+        end: ['divider', 'start', 0],
+        alpha: 0.6,
+        custom: {
+          textSize: 20,
+          textWeight: 600
+        }
+      },
+      label_text: {
+        width: 'wrap',
+        top: ['city_text', 'bottom'],
+        start: ['parent', 'start', 45],
+        end: ['parent', 'end'],
+        centerHorizontally: 'parent'
+      },
+      divider: {
+        width: 'wrap',
+        height: 'wrap',
+        alpha: 1.0,
+        top: ['city_text', 'bottom', 0],
+        end: ['label_text', 'start', 0],
+      },
+      hl_temp_text: {
+        width: 'wrap',
+        height: 'wrap',
+        start: ['box', 'start',0],
+        end: ['box', 'end',0],
+        top: ['label_text', 'bottom',0],
+        centerHorizontally: 'parent',
+        alpha: 0.0,
+      },
+      box: {
+        width: 'spread',
+        height: 'spread',
+        start: ['parent', 'start'],
+        end: ['parent', 'end'],
+        top: ['parent', 'top'],
+        custom: {
+          color: '#FF1C1B33'
+        }
+      }
+    }
+  },
+  Transitions: {
+    default: {
+      from: 'start',
+      to: 'end',
+      pathMotionArc: 'startHorizontal',
+    }
+  }
+}

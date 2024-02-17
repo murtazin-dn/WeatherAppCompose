@@ -14,8 +14,8 @@ val seProDisplayFamily = FontFamily(
     Font(R.font.se_pro_display_medium, FontWeight.Medium),
     Font(R.font.se_pro_display_regular, FontWeight.Normal),
     Font(R.font.se_pro_display_semibold, FontWeight.SemiBold),
-    Font(R.font.se_pro_display_thin, FontWeight.Thin),
-    Font(R.font.se_pro_display_ultralight, FontWeight.ExtraLight),
+    Font(R.font.se_pro_display_thin, FontWeight.ExtraLight),
+    Font(R.font.se_pro_display_ultralight, FontWeight.Thin),
     Font(R.font.se_pro_display_blackitalic, FontWeight.Black, FontStyle.Italic),
     Font(R.font.se_pro_display_bolditalic, FontWeight.Bold, FontStyle.Italic),
     Font(R.font.se_pro_display_heavyitalic, FontWeight.ExtraBold, FontStyle.Italic),
@@ -23,6 +23,6 @@ val seProDisplayFamily = FontFamily(
     Font(R.font.se_pro_display_mediumitalic, FontWeight.Medium, FontStyle.Italic),
     Font(R.font.se_pro_display_regularitalic, FontWeight.Normal, FontStyle.Italic),
     Font(R.font.se_pro_display_semibolditalic, FontWeight.SemiBold, FontStyle.Italic),
-    Font(R.font.se_pro_display_thinitalic, FontWeight.Thin, FontStyle.Italic),
-    Font(R.font.se_pro_display_ultralightitalic, FontWeight.ExtraLight, FontStyle.Italic)
+    Font(R.font.se_pro_display_thinitalic, FontWeight.ExtraLight, FontStyle.Italic),
+    Font(R.font.se_pro_display_ultralightitalic, FontWeight.Thin, FontStyle.Italic)
 )

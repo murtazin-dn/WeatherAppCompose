@@ -22,5 +22,13 @@ val SecondaryDark = Color(0x99EBEBF5)
 
 val Linear1 = Color(0xFF422E5A)
 val Linear2 = Color(0xFF1C1B33)
+val Linear3 = Color(0xFF2E235E)
 
 val Black30 = Color(0x4D000000)
+
+val HourlyCardColorEnabled = Color(0x3348319D)
+val HourlyCardColorDisabled = Color(0xFF48319D)
+
+val SunSetColor = Color(0xFF0E326F)
+val SunRiseColor = Color(0xFF8AA0C9)
+
