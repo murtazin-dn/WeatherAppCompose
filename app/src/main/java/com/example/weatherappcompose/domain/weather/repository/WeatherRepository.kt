@@ -1,8 +1,9 @@
 package com.example.weatherappcompose.domain.weather.repository
 
+import com.example.weatherappcompose.data.settings.model.Geo
 import com.example.weatherappcompose.data.util.Response
-import com.example.weatherappcompose.data.network.weather.model.response.ForecastWeatherResponse
-import kotlinx.coroutines.flow.Flow
+import com.example.weatherappcompose.domain.weather.model.Weather
+
 interface WeatherRepository {
-    suspend fun getForecastWeather(location: String?): Flow<Response<ForecastWeatherResponse>>
+    suspend fun getWeather(geo: Geo): Response<Weather>
 }

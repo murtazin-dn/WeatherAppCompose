@@ -26,15 +26,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.R
-import com.example.weatherappcompose.data.network.weather.model.response.testData
-import com.example.weatherappcompose.ui.screens.home.model.HomeViewState
 import com.example.weatherappcompose.ui.theme.Linear3
 import com.example.weatherappcompose.ui.theme.PrimaryDark
 import com.example.weatherappcompose.ui.theme.SecondaryDark
 import com.example.weatherappcompose.ui.theme.Typography
 
 @Composable
-fun FeelsLikeCard(modifier: Modifier, feelsLike: Double){
+fun FeelsLikeCard(modifier: Modifier, feelsLike: Int){
     Card(
         modifier = modifier
             .padding(7.dp)
@@ -71,7 +69,7 @@ fun FeelsLikeCard(modifier: Modifier, feelsLike: Double){
                 Text(
                     modifier = Modifier.padding(top = 10.dp),
                     style = Typography.titleLarge.copy(color = PrimaryDark),
-                    text = "$feelsLike°"
+                    text = "${feelsLike}°"
                 )
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(
@@ -93,11 +91,10 @@ fun FeelsLikeCard(modifier: Modifier, feelsLike: Double){
 )
 @Composable
 fun FeelsLikeCard_Preview() {
-    val weather = HomeViewState.WeatherLoaded(testData).weather.current
     Row(modifier = Modifier.fillMaxSize()) {
         FeelsLikeCard(
             modifier = Modifier.fillMaxWidth(0.5f),
-            feelsLike = weather.feelslike_c
+            feelsLike = 37
         )
     }
 }

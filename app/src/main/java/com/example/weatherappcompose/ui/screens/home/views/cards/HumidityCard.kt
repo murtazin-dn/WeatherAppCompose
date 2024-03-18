@@ -26,16 +26,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.R
-import com.example.weatherappcompose.data.network.weather.model.response.testData
-import com.example.weatherappcompose.ui.screens.home.model.HomeViewState
 import com.example.weatherappcompose.ui.theme.Linear3
 import com.example.weatherappcompose.ui.theme.PrimaryDark
 import com.example.weatherappcompose.ui.theme.SecondaryDark
 import com.example.weatherappcompose.ui.theme.Typography
-import kotlin.math.ln
 
 @Composable
-fun HumidityCard(modifier: Modifier, humidity: Int, temp: Double){
+fun HumidityCard(modifier: Modifier, humidity: Int, dewPoint: Int){
     Card(
         modifier = modifier
             .padding(7.dp)
@@ -74,13 +71,11 @@ fun HumidityCard(modifier: Modifier, humidity: Int, temp: Double){
                     style = Typography.titleLarge.copy(color = PrimaryDark),
                     text = "$humidity%"
                 )
-                val f = ((17.27 * temp) / (237.7 + temp)) + ln(humidity.toDouble() / 100)
-                val dewPoint = (237.7 * f) / (17.27 - f)
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(
                         modifier = Modifier.align(Alignment.BottomStart),
                         style = Typography.labelSmall.copy(color = PrimaryDark),
-                        text = "The dew point is ${dewPoint.toInt()} right now"
+                        text = "The dew point is ${dewPoint} right now"
                     )
                 }
             }
@@ -98,12 +93,11 @@ fun HumidityCard(modifier: Modifier, humidity: Int, temp: Double){
 )
 @Composable
 fun HumidityCard_Preview() {
-    val weather = HomeViewState.WeatherLoaded(testData).weather.current
     Row(modifier = Modifier.fillMaxSize()) {
         HumidityCard(
             modifier = Modifier.fillMaxWidth(0.5f),
-            humidity = weather.humidity,
-            temp = weather.temp_c
+            humidity = 31,
+            dewPoint = 14
         )
     }
 }

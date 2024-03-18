@@ -1,9 +1,13 @@
 package com.example.weatherappcompose.di
 
-import com.example.weatherappcompose.data.util.BASE_URL
-import com.example.weatherappcompose.data.network.weather.repository.WeatherRepositoryImpl
+import com.example.weatherappcompose.data.network.geocoding.repository.GeocodingService
+import com.example.weatherappcompose.data.network.geocodingweather.repository.GeocodingWeatherService
+import com.example.weatherappcompose.data.network.weather.repository.AirQualityService
 import com.example.weatherappcompose.data.network.weather.repository.WeatherService
-import com.example.weatherappcompose.domain.weather.repository.WeatherRepository
+import com.example.weatherappcompose.data.util.AIR_QUALITY_URL
+import com.example.weatherappcompose.data.util.BASE_URL
+import com.example.weatherappcompose.data.util.GEOCODING_URL
+import com.example.weatherappcompose.data.util.GEOCODING_WEATHER_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,20 +38,59 @@ object NetworkModule {
             .build()
 
     @Singleton
+    @BaseUrlRetrofit
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+    fun provideBaseRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create())
         .baseUrl(BASE_URL)
         .client(okHttpClient)
         .build()
 
     @Singleton
+    @AirQualityRetrofit
     @Provides
-    fun provideWeatherService(retrofit: Retrofit): WeatherService = retrofit.create(WeatherService::class.java)
+    fun provideAirQualityRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+        .addConverterFactory(MoshiConverterFactory.create())
+        .baseUrl(AIR_QUALITY_URL)
+        .client(okHttpClient)
+        .build()
+
+    @Singleton
+    @GeocodingRetrofit
+    @Provides
+    fun provideGeocodingRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+        .addConverterFactory(MoshiConverterFactory.create())
+        .baseUrl(GEOCODING_URL)
+        .client(okHttpClient)
+        .build()
+    @Singleton
+    @GeocodingWeatherRetrofit
+    @Provides
+    fun provideGeocodingWeatherRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+        .addConverterFactory(MoshiConverterFactory.create())
+        .baseUrl(GEOCODING_WEATHER_URL)
+        .client(okHttpClient)
+        .build()
 
     @Singleton
     @Provides
-    fun providesWeatherRepository(weatherService: WeatherService):WeatherRepository = WeatherRepositoryImpl(weatherService)
+    fun provideWeatherService(@BaseUrlRetrofit retrofit: Retrofit): WeatherService =
+        retrofit.create(WeatherService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideAirQualityService(@AirQualityRetrofit retrofit: Retrofit): AirQualityService =
+        retrofit.create(AirQualityService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideGeocodingService(@GeocodingRetrofit retrofit: Retrofit): GeocodingService =
+        retrofit.create(GeocodingService::class.java)
+    @Singleton
+    @Provides
+    fun provideGeocodingWeatherService(@GeocodingWeatherRetrofit retrofit: Retrofit): GeocodingWeatherService =
+        retrofit.create(GeocodingWeatherService::class.java)
+
 
 
 }

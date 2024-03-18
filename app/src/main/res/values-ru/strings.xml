@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Погода</string>
+
+    <string name="clear">Ясно</string>
+    <string name="mostly_clear">Переменная облачность</string>
+    <string name="partly_cloudy">Переменная облачность</string>
+    <string name="cloudy">Облачно</string>
+    <string name="fog">Туман</string>
+    <string name="freezing_fog">Морозный туман</string>
+    <string name="light_drizzle">Легкий морось</string>
+    <string name="drizzle">Морось</string>
+    <string name="heavy_drizzle">Сильный дождь</string>
+    <string name="light_freezing_drizzle">Легкий замерзающий дождь</string>
+    <string name="freezing_drizzle">Замерзающий дождь</string>
+    <string name="light_rain">Легкий дождь</string>
+    <string name="rain">Дождь</string>
+    <string name="heavy_rain">Сильный дождь</string>
+    <string name="light_freezing_rain">Легкий замерзающий дождь</string>
+    <string name="freezing_rain">Замерзающий дождь</string>
+    <string name="light_snow">Легкий снег</string>
+    <string name="snow">Снег</string>
+    <string name="heavy_snow">Сильный снег</string>
+    <string name="snow_grains">Снежные зерна</string>
+    <string name="light_rain_shower">Легкий дождь с прояснениями</string>
+    <string name="rain_shower">Ливень</string>
+    <string name="heavy_rain_shower">Сильный ливень</string>
+    <string name="snow_shower">Снегопад</string>
+    <string name="heavy_snow_shower">Сильный снегопад</string>
+    <string name="thunderstorm">Гроза</string>
+    <string name="hailstorm">Град</string>
+    <string name="heavy_hailstorm">Сильный град</string>
+    <string name="unknown_code">Неизвестный код</string>
+
+    <string name="kmh">Км/ч</string>
+    <string name="mph">Мили/ч</string>
+    <string name="ms">м/с</string>
+    <string name="knots">Узлы</string>
+
+    <string name="millimeter">Миллиметры</string>
+    <string name="inch">Дюймы</string>
+
+    <string name="c">"°C"</string>
+    <string name="f">"°F"</string>
+
+    <string name="settings">Настройки</string>
+
+    <string name="units">Единицы измерения</string>
+    <string name="temperature">Температура</string>
+    <string name="wind_speed">Скорость ветра</string>
+    <string name="precipitation">Осадки</string>
+</resources>

@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
@@ -25,6 +26,7 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
@@ -43,11 +45,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -57,7 +62,13 @@ import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
 import androidx.constraintlayout.compose.MotionScene
 import com.example.weatherappcompose.R
-import com.example.weatherappcompose.data.network.weather.model.response.testData
+import com.example.weatherappcompose.domain.weather.model.AirQuality
+import com.example.weatherappcompose.domain.weather.model.Current
+import com.example.weatherappcompose.domain.weather.model.HourlyDaily
+import com.example.weatherappcompose.domain.weather.model.Precipitation
+import com.example.weatherappcompose.domain.weather.model.Sun
+import com.example.weatherappcompose.domain.weather.model.Weather
+import com.example.weatherappcompose.domain.weather.model.Wind
 import com.example.weatherappcompose.ui.screens.home.model.HomeViewState
 import com.example.weatherappcompose.ui.screens.home.views.cards.AirQualityCard
 import com.example.weatherappcompose.ui.screens.home.views.cards.FeelsLikeCard
@@ -81,7 +92,9 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeViewDisplay(
-    state: HomeViewState.WeatherLoaded
+    state: HomeViewState.WeatherLoaded,
+    navigateToSearchCity: () -> Unit,
+    navigateToSettings: () -> Unit
 ){
     BoxWithConstraints (
         modifier = Modifier.fillMaxSize()
@@ -118,7 +131,7 @@ fun HomeViewDisplay(
             }
         ){
 //            HomeTop(state)
-            HomeTop(state, scaffoldState, boxWithConstraintsScope, )
+            HomeTop(state, scaffoldState, boxWithConstraintsScope, navigateToSearchCity, navigateToSettings)
         }
     }
 }
@@ -128,7 +141,9 @@ fun HomeViewDisplay(
 private fun HomeTop(
     state: HomeViewState.WeatherLoaded,
     scaffoldState: BottomSheetScaffoldState,
-    boxWithConstraintsScope: BoxWithConstraintsScope
+    boxWithConstraintsScope: BoxWithConstraintsScope,
+    navigateToSearchCity: () -> Unit,
+    navigateToSettings: () -> Unit,
     ) {
     var progress by remember {
         mutableStateOf(0f)
@@ -181,14 +196,17 @@ private fun HomeTop(
 //                    debug = EnumSet.of(MotionLayoutDebugFlags.SHOW_ALL)
                 ) {
                     backgroundState = motionColor("box", "color")
+
                     Box(
                         modifier = Modifier
                             .layoutId("box")
                     )
                     Text(
-                        modifier = Modifier.layoutId("city_text"),
+                        modifier = Modifier
+                            .layoutId("city_text")
+                        ,
                         style = Typography.titleLarge.copy(color = PrimaryDark),
-                        text = state.weather.location.region,
+                        text = state.weather.city,
                     )
                     Text(
                         modifier = Modifier
@@ -202,7 +220,7 @@ private fun HomeTop(
                             lineHeight = 70.sp,
                             letterSpacing = 0.37.sp,
                         ),
-                        text = "${state.weather.current.temp_c.toInt()}°"
+                        text = "${state.weather.current.temp}°"
                     )
                     VerticalDivider(
                         modifier = Modifier
@@ -216,13 +234,35 @@ private fun HomeTop(
                         modifier = Modifier
                             .layoutId("label_text"),
                         style = Typography.titleSmall.copy(color = SecondaryDark),
-                        text = state.weather.current.condition.text
+                        text = stringResource(state.weather.current.weatherDescription)
                     )
                     Text(
                         modifier = Modifier.layoutId("hl_temp_text"),
                         style = Typography.titleSmall.copy(color = PrimaryDark),
-                        text = "H:${state.weather.forecast.forecastday.first().day.maxtemp_c.toInt()}°  " +
-                                "L:${state.weather.forecast.forecastday.first().day.mintemp_c.toInt()}°"
+                        text = "H:${state.weather.current.tempMax}°  " +
+                                "L:${state.weather.current.tempMin}°"
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .size(30.dp)
+                            .layoutId("ic_search")
+                            .clickable {
+                                navigateToSearchCity.invoke()
+                            },
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus),
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .size(30.dp)
+                            .layoutId("ic_settings")
+                            .clickable {
+                                navigateToSettings.invoke()
+                            },
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_settings),
+                        contentDescription = null,
+                        tint = Color.White
                     )
                 }
             }
@@ -243,7 +283,7 @@ fun ForecastTab(
         item {
             AirQualityCard(
                 modifier = Modifier.fillMaxWidth(),
-                airQuality = state.weather.current.air_quality)
+                airQuality = state.weather.current.airQuality)
         }
         item{
             Row (
@@ -251,11 +291,11 @@ fun ForecastTab(
             ) {
                 UVCard(
                     modifier = Modifier.weight(1f),
-                    uv = state.weather.current.uv
+                    uv = state.weather.current.uvIndex
                 )
                 SunRiseCard(
                     modifier = Modifier.weight(1f),
-                    astro = state.weather.forecast.forecastday.first().astro
+                    sun = state.weather.current.sun
                 )
             }
         }
@@ -265,13 +305,11 @@ fun ForecastTab(
             ) {
                 WindCard(
                     modifier = Modifier.weight(1f),
-                    windKph = state.weather.current.wind_mph,
-                    windDegree = state.weather.current.wind_degree,
+                    wind = state.weather.current.wind
                 )
                 RainFallCard(
                     modifier = Modifier.weight(1f),
-                    precip = state.weather.current.precip_mm,
-                    totalPrecip = state.weather.forecast.forecastday.first().day.totalprecip_mm
+                    precipitation = state.weather.current.precipitation
                 )
             }
         }
@@ -281,12 +319,12 @@ fun ForecastTab(
             ) {
                 FeelsLikeCard(
                     modifier = Modifier.weight(1f),
-                    feelsLike = state.weather.current.feelslike_c
+                    feelsLike = state.weather.current.feelsLike
                 )
                 HumidityCard(
                     modifier = Modifier.weight(1f),
                     humidity = state.weather.current.humidity,
-                    temp = state.weather.current.temp_c
+                    dewPoint = state.weather.current.dewPoint
                 )
             }
         }
@@ -395,7 +433,125 @@ fun TabRowIndicator(
 @Composable
 fun HomeViewDisplay_Preview() {
     HomeViewDisplay(
-        state = HomeViewState.WeatherLoaded(testData)
+        state = HomeViewState.WeatherLoaded(
+            Weather(
+                city = "Orenburg",
+                current = Current(
+                    temp = 10,
+                    tempMin = 5,
+                    tempMax = 15,
+                    weatherDescription = R.string.cloudy,
+                    airQuality = AirQuality(
+                        aqi = 42,
+                        pm10 = 14.6,
+                        pm2_5 = 9.0,
+                        co = 201.0,
+                        no2 = 4.4,
+                        so2 = 1.8,
+                        o3 = 85.0
+                    ),
+                    uvIndex = 4,
+                    sun = Sun(
+                        sunRise = "05:44 AM",
+                        sunSet = "08:20 PM"
+                    ),
+                    wind = Wind(
+                        speed = 9.1,
+                        direction = 288,
+                        speedUnit = "km/h"
+                    ),
+                    precipitation = Precipitation(
+                        precipitation = 0.00,
+                        precipitationSum = 0.80,
+                        unit = "mm"
+                    ),
+                    humidity = 78,
+                    dewPoint = 14,
+                    feelsLike = 12
+                ),
+                hourly = listOf(
+                    HourlyDaily(
+                        time = "1 AM",
+                        icon = R.drawable.day_116,
+                        temp = 6
+                    ),
+                    HourlyDaily(
+                        time = "2 AM",
+                        icon = R.drawable.day_116,
+                        temp = 7
+                    ),
+                    HourlyDaily(
+                        time = "3 AM",
+                        icon = R.drawable.day_116,
+                        temp = 8
+                    ),
+                    HourlyDaily(
+                        time = "4 AM",
+                        icon = R.drawable.day_116,
+                        temp = 9
+                    ),
+                    HourlyDaily(
+                        time = "5 AM",
+                        icon = R.drawable.day_116,
+                        temp = 10
+                    ),
+                    HourlyDaily(
+                        time = "6 AM",
+                        icon = R.drawable.day_116,
+                        temp = 9
+                    ),
+                    HourlyDaily(
+                        time = "7 AM",
+                        icon = R.drawable.day_116,
+                        temp = 8
+                    ),
+                    HourlyDaily(
+                        time = "8 AM",
+                        icon = R.drawable.day_116,
+                        temp = 6
+                    )
+                ),
+                daily = listOf(
+                    HourlyDaily(
+                        time = "MON",
+                        icon = R.drawable.day_116,
+                        temp = 6
+                    ),
+                    HourlyDaily(
+                        time = "TUE",
+                        icon = R.drawable.day_116,
+                        temp = 7
+                    ),
+                    HourlyDaily(
+                        time = "WED",
+                        icon = R.drawable.day_116,
+                        temp = 8
+                    ),
+                    HourlyDaily(
+                        time = "THU",
+                        icon = R.drawable.day_116,
+                        temp = 9
+                    ),
+                    HourlyDaily(
+                        time = "FRI",
+                        icon = R.drawable.day_116,
+                        temp = 10
+                    ),
+                    HourlyDaily(
+                        time = "SAT",
+                        icon = R.drawable.day_116,
+                        temp = 9
+                    ),
+                    HourlyDaily(
+                        time = "SUN",
+                        icon = R.drawable.day_116,
+                        temp = 8
+                    )
+                )
+            )
+        ),
+        navigateToSearchCity = {},
+        navigateToSettings = {}
     )
 }
 

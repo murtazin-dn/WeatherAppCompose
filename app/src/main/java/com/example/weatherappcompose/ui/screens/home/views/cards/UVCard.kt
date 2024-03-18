@@ -29,8 +29,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.R
-import com.example.weatherappcompose.data.network.weather.model.response.testData
-import com.example.weatherappcompose.ui.screens.home.model.HomeViewState
 import com.example.weatherappcompose.ui.theme.HourlyCardColorDisabled
 import com.example.weatherappcompose.ui.theme.Linear3
 import com.example.weatherappcompose.ui.theme.PrimaryDark
@@ -124,9 +122,9 @@ fun DrawUVLine(uv: Int){
 @Composable
 fun UVCard_Preview() {
     Row(modifier = Modifier.fillMaxSize()) {
-        SunRiseCard(
+        UVCard(
             modifier = Modifier.fillMaxWidth(0.5f),
-            astro = HomeViewState.WeatherLoaded(testData).weather.forecast.forecastday.first().astro
+            uv = 3
         )
     }
 }

@@ -20,8 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.weatherappcompose.data.network.weather.model.response.base.toForecastModel
-import com.example.weatherappcompose.ui.screens.home.model.ForecastModel
+import com.example.weatherappcompose.domain.weather.model.HourlyDaily
 import com.example.weatherappcompose.ui.screens.home.model.HomeViewState
 import com.example.weatherappcompose.ui.theme.HourlyCardColorDisabled
 import com.example.weatherappcompose.ui.theme.HourlyCardColorEnabled
@@ -33,15 +32,15 @@ fun Forecast(
     state: HomeViewState.WeatherLoaded,
     forecastTabs: ForecastTabs
 ){
-    val forecast = mutableListOf<ForecastModel>()
+    val forecast = mutableListOf<HourlyDaily>()
     when(forecastTabs){
         ForecastTabs.HOURLY_FORECAST ->
-            state.weather.forecast.forecastday.first().hour.forEach {
-                forecast.add(it.toForecastModel())
+            state.weather.hourly.forEach {
+                forecast.add(it)
             }
         ForecastTabs.WEEKLY_FORECAST ->
-            state.weather.forecast.forecastday.forEach {
-                forecast.add(it.toForecastModel())
+            state.weather.daily.forEach {
+                forecast.add(it)
             }
     }
 

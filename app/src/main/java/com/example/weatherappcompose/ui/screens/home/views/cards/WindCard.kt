@@ -37,15 +37,14 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.R
-import com.example.weatherappcompose.data.network.weather.model.response.testData
-import com.example.weatherappcompose.ui.screens.home.model.HomeViewState
+import com.example.weatherappcompose.domain.weather.model.Wind
 import com.example.weatherappcompose.ui.theme.Linear3
 import com.example.weatherappcompose.ui.theme.SecondaryDark
 import com.example.weatherappcompose.ui.theme.Typography
 import kotlin.math.PI
 
 @Composable
-fun WindCard(modifier: Modifier, windKph: Double, windDegree: Int){
+fun WindCard(modifier: Modifier, wind: Wind){
     Card(
         modifier = modifier
             .padding(7.dp)
@@ -84,19 +83,19 @@ fun WindCard(modifier: Modifier, windKph: Double, windDegree: Int){
                     .fillMaxSize()
                     .padding(top = 5.dp)
             ) {
-                DrawWindCycle(windKph, windDegree)
+                DrawWindCycle()
                 Image(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow),
                     contentDescription = null,
                     modifier = Modifier.graphicsLayer {
-                        rotationZ = windDegree.toFloat()
+                        rotationZ = wind.direction.toFloat()
                     }
                 )
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = windKph.toString(), style = Typography.titleSmall.copy(Color.White))
-                    Text(text = "km/h", style = Typography.labelSmall.copy(Color.White))
+                    Text(text = wind.speed.toString(), style = Typography.titleSmall.copy(Color.White))
+                    Text(text = wind.speedUnit, style = Typography.labelSmall.copy(Color.White))
                 }
             }
         }
@@ -105,7 +104,7 @@ fun WindCard(modifier: Modifier, windKph: Double, windDegree: Int){
 
 
 @Composable
-private fun DrawWindCycle(windKph: Double, windDegree: Int){
+private fun DrawWindCycle(){
     val tmN = rememberTextMeasurer()
     val tmS = rememberTextMeasurer()
     val tmE = rememberTextMeasurer()
@@ -210,12 +209,14 @@ private fun DrawScope.drawDivisions(){
 )
 @Composable
 fun WindCard_Preview() {
-    val currentWeather = HomeViewState.WeatherLoaded(testData).weather.current
     Row(modifier = Modifier.fillMaxSize()) {
         WindCard(
             modifier = Modifier.fillMaxWidth(0.5f),
-            windKph = currentWeather.wind_kph,
-            windDegree = currentWeather.wind_degree
+            wind = Wind(
+                speed = 9.1,
+                direction = 288,
+                speedUnit = "km/h"
+            )
         )
     }
 }

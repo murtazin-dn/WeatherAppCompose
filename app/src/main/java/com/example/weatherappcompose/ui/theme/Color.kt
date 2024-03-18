@@ -32,3 +32,5 @@ val HourlyCardColorDisabled = Color(0xFF48319D)
 val SunSetColor = Color(0xFF0E326F)
 val SunRiseColor = Color(0xFF8AA0C9)
 
+val Blue = Color(0xFF40CBD8)
+

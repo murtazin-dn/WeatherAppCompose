@@ -25,15 +25,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.R
-import com.example.weatherappcompose.data.network.weather.model.response.testData
-import com.example.weatherappcompose.ui.screens.home.model.HomeViewState
+import com.example.weatherappcompose.domain.weather.model.Precipitation
 import com.example.weatherappcompose.ui.theme.Linear3
 import com.example.weatherappcompose.ui.theme.PrimaryDark
 import com.example.weatherappcompose.ui.theme.SecondaryDark
 import com.example.weatherappcompose.ui.theme.Typography
 
 @Composable
-fun RainFallCard(modifier: Modifier, precip: Double, totalPrecip: Double){
+fun RainFallCard(modifier: Modifier, precipitation: Precipitation){
     Card(
         modifier = modifier
             .padding(7.dp)
@@ -70,7 +69,7 @@ fun RainFallCard(modifier: Modifier, precip: Double, totalPrecip: Double){
                 Text(
                     modifier = Modifier.padding(top = 10.dp),
                     style = Typography.titleLarge.copy(color = PrimaryDark),
-                    text = "$precip mm"
+                    text = precipitation.precipitation.toString() + precipitation.unit
                 )
                 Text(
                     style = Typography.titleSmall.copy(color = PrimaryDark),
@@ -80,7 +79,8 @@ fun RainFallCard(modifier: Modifier, precip: Double, totalPrecip: Double){
                     Text(
                         modifier = Modifier.align(Alignment.BottomStart),
                         style = Typography.labelSmall.copy(color = PrimaryDark),
-                        text = "$totalPrecip mm expected in next 24h."
+                        text = "${ precipitation.precipitationSum.toString() } ${precipitation.unit}" +
+                                " expected in next 24h."
                     )
                 }
             }
@@ -96,12 +96,14 @@ fun RainFallCard(modifier: Modifier, precip: Double, totalPrecip: Double){
 )
 @Composable
 fun RainFallCard_Preview() {
-    val weather = HomeViewState.WeatherLoaded(testData).weather
     Row(modifier = Modifier.fillMaxSize()) {
         RainFallCard(
             modifier = Modifier.fillMaxWidth(0.5f),
-            precip = weather.current.precip_mm,
-            totalPrecip = weather.forecast.forecastday.first().day.totalprecip_mm
+            precipitation = Precipitation(
+                precipitation = 0.00,
+                precipitationSum = 0.80,
+                unit = "mm"
+            )
         )
     }
 }

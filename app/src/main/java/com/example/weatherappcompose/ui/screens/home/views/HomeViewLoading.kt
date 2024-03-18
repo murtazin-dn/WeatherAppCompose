@@ -3,6 +3,7 @@ package com.example.weatherappcompose.ui.screens.home.views
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -32,13 +33,13 @@ fun HomeViewLoading(){
         )
         Card(
             modifier = Modifier
-                .fillMaxSize(0.1f),
+                .align(Alignment.Center),
             colors = CardDefaults.cardColors(containerColor = Linear2),
             shape = RoundedCornerShape(22.dp)
-            ) {
-            Box(modifier = Modifier.fillMaxSize()){
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.padding(20.dp)
+            )
         }
     }
 }

@@ -26,7 +26,9 @@ import com.example.weatherappcompose.ui.theme.PrimaryDark
 import com.example.weatherappcompose.ui.theme.Typography
 
 @Composable
-fun HomeViewError(){
+fun HomeViewError(
+    reload: () -> Unit
+){
     Box(
         modifier = Modifier.fillMaxSize()
     ){
@@ -53,7 +55,7 @@ fun HomeViewError(){
                     text = "Error",
                     style = Typography.titleLarge.copy(color = PrimaryDark, fontWeight = FontWeight.SemiBold)
                 )
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = reload) {
                     Text(
                         text = "Reload",
                         style = Typography.titleSmall.copy(color = PrimaryDark)
@@ -68,5 +70,5 @@ fun HomeViewError(){
 @Preview()
 @Composable
 fun HomeViewError_Preview(){
-    HomeViewError()
+    HomeViewError{}
 }

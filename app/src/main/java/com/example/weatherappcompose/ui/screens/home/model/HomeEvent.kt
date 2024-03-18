@@ -1,8 +1,7 @@
 package com.example.weatherappcompose.ui.screens.home.model
 
+import com.example.weatherappcompose.data.settings.model.Geo
+
 sealed class HomeEvent{
-    object OpenMenu: HomeEvent()
-    object LoadWeather: HomeEvent()
-    object ChooseLocation: HomeEvent()
-    object ReloadScreen: HomeEvent()
+    data class LoadWeather(val geo: Geo?): HomeEvent()
 }

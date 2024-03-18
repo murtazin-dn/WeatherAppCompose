@@ -39,9 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.R
-import com.example.weatherappcompose.data.network.weather.model.response.base.AirQuality
-import com.example.weatherappcompose.data.network.weather.model.response.testData
-import com.example.weatherappcompose.ui.screens.home.model.HomeViewState
+import com.example.weatherappcompose.domain.weather.model.AirQuality
 import com.example.weatherappcompose.ui.theme.HourlyCardColorDisabled
 import com.example.weatherappcompose.ui.theme.Linear3
 import com.example.weatherappcompose.ui.theme.PrimaryDark
@@ -53,7 +51,7 @@ import com.example.weatherappcompose.ui.utils.ext.airQualityToString
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AirQualityCard(modifier: Modifier, airQuality: AirQuality){
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(true) }
     Card(
         modifier = modifier
             .padding(7.dp)
@@ -89,10 +87,10 @@ fun AirQualityCard(modifier: Modifier, airQuality: AirQuality){
             Text(
                 modifier = Modifier.padding(top = 15.dp),
                 style = Typography.titleLarge.copy(color = PrimaryDark),
-                text = "${airQuality.gb_defra_index} " +
-                        airQualityToString(airQuality.gb_defra_index) + " health risk"
+                text = "${airQuality.aqi} " +
+                        airQualityToString(airQuality.aqi)
             )
-            DrawAirQualityLine(airQuality.gb_defra_index)
+            DrawAirQualityLine(airQuality.aqi)
             Divider(
                 modifier = Modifier
                     .padding(vertical = 5.dp)
@@ -176,7 +174,7 @@ private fun DrawAirQualityLine(airQuality: Int){
                 val radiusCircle = 3.dp.toPx()
                 val radiusBorder = 4.dp.toPx()
                 val offsetCircle =
-                    Offset(((size.width - radiusBorder) / 10) * airQuality, radiusCircle)
+                    Offset(((size.width - radiusBorder) / 500) * airQuality, radiusCircle)
                 drawContent()
                 drawCircle(
                     color = Color.White,
@@ -200,10 +198,17 @@ private fun DrawAirQualityLine(airQuality: Int){
 @Composable
 fun AirQualityCard_Preview() {
     Row(modifier = Modifier.fillMaxSize()) {
-        val weather = HomeViewState.WeatherLoaded(testData)
         AirQualityCard(
             modifier = Modifier.fillMaxWidth(),
-            airQuality = weather.weather.current.air_quality
+            airQuality = AirQuality(
+                aqi = 42,
+                pm10 = 14.6,
+                pm2_5 = 9.0,
+                co = 201.0,
+                no2 = 4.4,
+                so2 = 1.8,
+                o3 = 85.0
+            )
         )
     }
 }

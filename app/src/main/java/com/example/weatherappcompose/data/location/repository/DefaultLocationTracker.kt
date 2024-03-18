@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.weatherappcompose.domain.location.LocationTracker
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -33,7 +34,11 @@ class DefaultLocationTracker @Inject constructor(
         val locationManager = application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        Log.e("DefaultLocationTracker", "hasAccessCoarseLocationPermission: $hasAccessCoarseLocationPermission")
+        Log.e("DefaultLocationTracker", "hasAccessFineLocationPermission: $hasAccessFineLocationPermission")
+        Log.e("DefaultLocationTracker", "isGpsEnabled: $isGpsEnabled")
         if(!hasAccessCoarseLocationPermission || !hasAccessFineLocationPermission || !isGpsEnabled) {
+
             return null
         }
 
@@ -51,6 +56,7 @@ class DefaultLocationTracker @Inject constructor(
                     cont.resume(it)
                 }
                 addOnFailureListener {
+                    Log.e("DefaultLocationTracker", "Error: $it")
                     cont.resume(null)
                 }
                 addOnCanceledListener {

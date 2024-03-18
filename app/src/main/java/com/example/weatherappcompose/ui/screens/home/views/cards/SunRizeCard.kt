@@ -29,9 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.R
-import com.example.weatherappcompose.data.network.weather.model.response.base.Astro
-import com.example.weatherappcompose.data.network.weather.model.response.testData
-import com.example.weatherappcompose.ui.screens.home.model.HomeViewState
+import com.example.weatherappcompose.domain.weather.model.Sun
 import com.example.weatherappcompose.ui.screens.home.model.SunState
 import com.example.weatherappcompose.ui.theme.Linear3
 import com.example.weatherappcompose.ui.theme.PrimaryDark
@@ -41,6 +39,7 @@ import com.example.weatherappcompose.ui.theme.SunSetColor
 import com.example.weatherappcompose.ui.theme.TertiaryDark
 import com.example.weatherappcompose.ui.theme.TertiaryLight
 import com.example.weatherappcompose.ui.theme.Typography
+import com.example.weatherappcompose.ui.utils.ext.dateTimeToTime
 import com.example.weatherappcompose.ui.utils.ext.fillWidthOfParent
 import com.example.weatherappcompose.ui.utils.ext.hhToHHInt
 import kotlin.math.PI
@@ -48,7 +47,7 @@ import kotlin.math.cos
 
 
 @Composable
-fun SunRiseCard(modifier: Modifier, astro: Astro){
+fun SunRiseCard(modifier: Modifier, sun: Sun){
     Card(
         modifier = modifier
             .padding(7.dp)
@@ -83,14 +82,14 @@ fun SunRiseCard(modifier: Modifier, astro: Astro){
             }
             Text(
                 style = Typography.titleLarge.copy(color = PrimaryDark),
-                text = astro.sunrise
+                text = dateTimeToTime(sun.sunRise)
             )
-            DrawSunLine(sunRise = astro.sunrise, sunSet = astro.sunset)
+            DrawSunLine(sunRise = sun.sunRise, sunSet = sun.sunSet)
             Box(modifier = Modifier.fillMaxSize()){
                 Text(
                     modifier = Modifier.align(Alignment.BottomStart),
                     style = Typography.labelSmall.copy(color = PrimaryDark),
-                    text = "Sunset: ${astro.sunset}"
+                    text = "Sunset: ${dateTimeToTime(sun.sunSet)}"
                 )
             }
 
@@ -197,7 +196,10 @@ fun SunRiseCard_Preview() {
     Row(modifier = Modifier.fillMaxSize()) {
         SunRiseCard(
             modifier = Modifier.fillMaxWidth(0.5f),
-            astro = HomeViewState.WeatherLoaded(testData).weather.forecast.forecastday.first().astro
+            Sun(
+                sunRise = "05:44 AM",
+                sunSet = "08:20 PM"
+            )
         )
     }
 

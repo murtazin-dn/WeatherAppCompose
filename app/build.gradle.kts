@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -43,7 +44,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     packaging {
         resources {
@@ -56,11 +57,16 @@ android {
 }
 
 dependencies {
-    implementation("com.google.android.gms:play-services-location:21.1.0")
     val nav_version = "2.7.6"
-    val hilt_version = "2.44"
+    val hilt_version = "2.48"
     val retrofit_version = "2.9.0"
     val httplogging_version = "4.12.0"
+
+    //Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+    //Play services
+    implementation("com.google.android.gms:play-services-location:21.2.0")
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:$nav_version")
