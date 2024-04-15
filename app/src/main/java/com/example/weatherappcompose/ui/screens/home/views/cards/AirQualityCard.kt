@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,7 +52,7 @@ import com.example.weatherappcompose.ui.utils.ext.airQualityToString
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AirQualityCard(modifier: Modifier, airQuality: AirQuality){
-    var expanded by remember { mutableStateOf(true) }
+    var expanded by remember { mutableStateOf(false) }
     Card(
         modifier = modifier
             .padding(7.dp)
@@ -80,15 +81,14 @@ fun AirQualityCard(modifier: Modifier, airQuality: AirQuality){
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
                     style = Typography.bodySmall.copy(color = SecondaryDark),
-                    text = "AIR QUALITY"
+                    text = stringResource(R.string.air_quality_header)
                 )
             }
 
             Text(
                 modifier = Modifier.padding(top = 15.dp),
                 style = Typography.titleLarge.copy(color = PrimaryDark),
-                text = "${airQuality.aqi} " +
-                        airQualityToString(airQuality.aqi)
+                text = "${airQuality.aqi} " + stringResource(airQualityToString(airQuality.aqi))
             )
             DrawAirQualityLine(airQuality.aqi)
             Divider(
@@ -122,7 +122,7 @@ fun AirQualityCard(modifier: Modifier, airQuality: AirQuality){
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "See more",
+                        text = stringResource(R.string.see_more),
                         style = Typography.bodyLarge.copy(color = Color.White)
                     )
                     Icon(

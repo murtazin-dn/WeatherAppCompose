@@ -43,11 +43,53 @@
     <string name="f">°F</string>
 
     <string name="settings">Settings</string>
+    <string name="weather">Weather</string>
 
     <string name="units">Units</string>
     <string name="temperature">Temperature</string>
     <string name="wind_speed">Wind speed</string>
     <string name="precipitation">Precipitation</string>
+
+    <string name="low_uv">Low</string>
+    <string name="moderate_uv">Moderate</string>
+    <string name="high_uv">High</string>
+    <string name="very_high_uv">Very high</string>
+    <string name="extreme_uv">Extreme</string>
+    <string name="error_uv">Error</string>
+
+    <string name="good_air_quality">Good</string>
+    <string name="medium_air_quality">Medium</string>
+    <string name="slightly_harmful_air_quality">Slightly harmful</string>
+    <string name="harmful_air_quality">Harmful</string>
+    <string name="very_harmful_air_quality">Very harmful</string>
+    <string name="extremely_air_quality">Extremely</string>
+
+    <string name="search_city">Search for a city</string>
+    <string name="reload">Reload</string>
+    <string name="error">Error</string>
+
+    <string name="hourly_forecast">Hourly forecast</string>
+    <string name="weekly_forecast">Weekly forecast</string>
+
+    <string name="see_more">See more</string>
+    <string name="feels_like_bottom">Similar to the actual temperature</string>
+
+    <string name="air_quality_header">AIR QUALITY</string>
+    <string name="feels_like_header">FEELS LIKE</string>
+    <string name="humidity_header">HUMIDITY</string>
+    <string name="humidity_bottom">The dew point is %1$s right now</string>
+    <string name="rainfall_header">RAINFALL</string>
+    <string name="rainfall_bottom1">in last hour</string>
+    <string name="rainfall_bottom2">" expected in next 24h."</string>
+    <string name="sunrise_header">SUNRISE</string>
+    <string name="sunset_bottom">Sunset: %1$s</string>
+    <string name="uv_index_header">UV INDEX</string>
+    <string name="wind_header">WIND</string>
+
+
+    <string name="app_widget_name">Weather</string>
+
+
 
 
 </resources>

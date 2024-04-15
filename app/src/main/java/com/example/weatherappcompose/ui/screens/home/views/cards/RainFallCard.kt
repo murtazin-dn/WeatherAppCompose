@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.R
@@ -61,7 +62,7 @@ fun RainFallCard(modifier: Modifier, precipitation: Precipitation){
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
                     style = Typography.bodySmall.copy(color = SecondaryDark),
-                    text = "RAINFALL"
+                    text = stringResource(R.string.rainfall_header)
                 )
 
             }
@@ -73,14 +74,14 @@ fun RainFallCard(modifier: Modifier, precipitation: Precipitation){
                 )
                 Text(
                     style = Typography.titleSmall.copy(color = PrimaryDark),
-                    text = "in last hour"
+                    text = stringResource(R.string.rainfall_bottom1)
                 )
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(
                         modifier = Modifier.align(Alignment.BottomStart),
                         style = Typography.labelSmall.copy(color = PrimaryDark),
-                        text = "${ precipitation.precipitationSum.toString() } ${precipitation.unit}" +
-                                " expected in next 24h."
+                        text = "${ precipitation.precipitationSum } ${precipitation.unit}" +
+                                stringResource(R.string.rainfall_bottom2)
                     )
                 }
             }

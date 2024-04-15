@@ -88,7 +88,6 @@ import com.example.weatherappcompose.ui.utils.ext.VerticalDivider
 import com.example.weatherappcompose.ui.utils.ext.getCurrentFraction
 import kotlinx.coroutines.launch
 
-
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeViewDisplay(
@@ -101,7 +100,10 @@ fun HomeViewDisplay(
     ) {
         val boxWithConstraintsScope = this
         val scaffoldState = rememberBottomSheetScaffoldState()
-        val tabItems = listOf("Hourly Forecast", "Weekly Forecast")
+        val tabItems = listOf(
+            stringResource(id = R.string.hourly_forecast),
+            stringResource(id = R.string.weekly_forecast)
+        )
         val pagerState = rememberPagerState(pageCount = { tabItems.size })
 
 
@@ -467,7 +469,8 @@ fun HomeViewDisplay_Preview() {
                     ),
                     humidity = 78,
                     dewPoint = 14,
-                    feelsLike = 12
+                    feelsLike = 12,
+                    icon = R.drawable.day_116
                 ),
                 hourly = listOf(
                     HourlyDaily(

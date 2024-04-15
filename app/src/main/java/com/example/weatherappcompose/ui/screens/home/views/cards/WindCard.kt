@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextMeasurer
@@ -73,7 +74,7 @@ fun WindCard(modifier: Modifier, wind: Wind){
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
                     style = Typography.bodySmall.copy(color = SecondaryDark),
-                    text = "WIND"
+                    text = stringResource(R.string.wind_header)
                 )
             }
 

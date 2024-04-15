@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -106,7 +107,7 @@ fun SearchView(
             shape = RoundedCornerShape(10.dp),
             placeholder = {
                 Text(
-                    text = "Search for a city or airoport",
+                    text = stringResource(id = R.string.search_city),
                     style = TextStyle(
                         fontFamily = seProDisplayFamily,
                         fontWeight = FontWeight.Normal,

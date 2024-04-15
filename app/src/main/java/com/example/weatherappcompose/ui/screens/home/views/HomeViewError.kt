@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,12 +53,12 @@ fun HomeViewError(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Error",
+                    text = stringResource(id = R.string.error),
                     style = Typography.titleLarge.copy(color = PrimaryDark, fontWeight = FontWeight.SemiBold)
                 )
                 Button(onClick = reload) {
                     Text(
-                        text = "Reload",
+                        text = stringResource(id = R.string.reload),
                         style = Typography.titleSmall.copy(color = PrimaryDark)
                     )
                 }

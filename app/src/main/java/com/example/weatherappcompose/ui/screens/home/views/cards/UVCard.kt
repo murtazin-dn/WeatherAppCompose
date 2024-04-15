@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.R
@@ -65,7 +66,7 @@ fun UVCard(modifier: Modifier, uv: Int){
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
                     style = Typography.bodySmall.copy(color = SecondaryDark),
-                    text = "UV INDEX"
+                    text = stringResource(R.string.uv_index_header)
                 )
             }
 
@@ -76,7 +77,7 @@ fun UVCard(modifier: Modifier, uv: Int){
             )
             Text(
                 style = Typography.titleSmall.copy(color = PrimaryDark),
-                text = uvToString(uv)
+                text = stringResource(id = uvToString(uv))
             )
             DrawUVLine(uv)
         }

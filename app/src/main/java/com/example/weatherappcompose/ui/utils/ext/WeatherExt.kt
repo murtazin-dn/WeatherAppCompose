@@ -9,21 +9,21 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 fun uvToString(uv: Int) = when (uv) {
-    in 0..2 -> "Low"
-    in 3..5 -> "Moderate"
-    in 6..7 -> "High"
-    in 8..10 -> "Very high"
-    in 11..13 -> "Extreme"
-    else -> "Error"
+    in 0..2 -> R.string.low_uv
+    in 3..5 -> R.string.moderate_uv
+    in 6..7 -> R.string.high_uv
+    in 8..10 -> R.string.very_high_uv
+    in 11..13 -> R.string.extreme_uv
+    else -> R.string.error_uv
 }
 
 fun airQualityToString(index: Int) = when (index) {
-    in 1..50 -> "Good"
-    in 51..100 -> "Medium"
-    in 101..150 -> "Slightly harmful"
-    in 151..200 -> "Harmful"
-    in 201..300 -> "Very harmful"
-    else -> "Extremely"
+    in 1..50 -> R.string.good_air_quality
+    in 51..100 -> R.string.medium_air_quality
+    in 101..150 -> R.string.slightly_harmful_air_quality
+    in 151..200 -> R.string.harmful_air_quality
+    in 201..300 -> R.string.very_harmful_air_quality
+    else -> R.string.extremely_air_quality
 }
 
 fun getWeatherCodeDescription(code: Int) = when (code) {

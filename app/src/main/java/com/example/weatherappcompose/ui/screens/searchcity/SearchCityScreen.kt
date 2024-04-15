@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -101,12 +102,12 @@ fun SearchCityError(reload: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Error",
+            text = stringResource(id = R.string.error),
             style = Typography.titleLarge.copy(color = PrimaryDark, fontWeight = FontWeight.SemiBold)
         )
         Button(onClick = reload) {
             Text(
-                text = "Reload",
+                text = stringResource(id = R.string.reload),
                 style = Typography.titleSmall.copy(color = PrimaryDark)
             )
         }
@@ -135,7 +136,7 @@ fun SearchCityHeader(
         TopAppBar(
             title = {
                 Text(
-                    text = "Weather",
+                    text = stringResource(id = R.string.weather),
                     style = Typography.titleMedium.copy(color = PrimaryDark)
                 )
             },

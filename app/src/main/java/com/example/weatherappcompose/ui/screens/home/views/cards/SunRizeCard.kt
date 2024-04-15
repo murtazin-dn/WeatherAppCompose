@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PointMode
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.weatherappcompose.R
@@ -77,7 +78,7 @@ fun SunRiseCard(modifier: Modifier, sun: Sun){
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
                     style = Typography.bodySmall.copy(color = SecondaryDark),
-                    text = "SUNRISE"
+                    text = stringResource(R.string.sunrise_header)
                 )
             }
             Text(
@@ -89,7 +90,7 @@ fun SunRiseCard(modifier: Modifier, sun: Sun){
                 Text(
                     modifier = Modifier.align(Alignment.BottomStart),
                     style = Typography.labelSmall.copy(color = PrimaryDark),
-                    text = "Sunset: ${dateTimeToTime(sun.sunSet)}"
+                    text = stringResource(R.string.sunset_bottom, dateTimeToTime(sun.sunSet))
                 )
             }
 

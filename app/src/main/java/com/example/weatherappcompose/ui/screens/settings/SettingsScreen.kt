@@ -56,12 +56,14 @@ fun SettingsScreen(
     val state = viewModel.settingsViewState.observeAsState()
     LaunchedEffect(key1 = state, block = { viewModel.obtainEvent(SettingsEvent.GetSettings) })
     Column(
-        modifier = Modifier.background(Linear3).fillMaxSize()
+        modifier = Modifier
+            .background(Linear3)
+            .fillMaxSize()
     ) {
         TopAppBar(
             title = {
                 Text(
-                    text = "Settings",
+                    text = stringResource(id = R.string.weather),
                     style = Typography.titleMedium.copy(color = PrimaryDark)
                 )
             },

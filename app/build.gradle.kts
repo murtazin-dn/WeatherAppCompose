@@ -61,6 +61,14 @@ dependencies {
     val hilt_version = "2.48"
     val retrofit_version = "2.9.0"
     val httplogging_version = "4.12.0"
+    val work_version = "2.9.0"
+
+    //WorkManager
+    implementation("androidx.work:work-runtime-ktx:$work_version")
+
+    //Glance
+    implementation("androidx.glance:glance-material3:1.0.0")
+    implementation("androidx.glance:glance-appwidget:1.0.0")
 
     //Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
@@ -74,7 +82,9 @@ dependencies {
     //Hilt
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("androidx.hilt:hilt-common:1.2.0")
+    implementation("androidx.hilt:hilt-work:1.2.0")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")

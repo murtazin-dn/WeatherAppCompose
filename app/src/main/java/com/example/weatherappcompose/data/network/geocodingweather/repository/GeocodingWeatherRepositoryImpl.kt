@@ -7,6 +7,7 @@ import com.example.weatherappcompose.domain.geocodingweather.model.GeocodingWeat
 import com.example.weatherappcompose.domain.mapper.Mapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.Locale
 import javax.inject.Inject
 
 class GeocodingWeatherRepositoryImpl @Inject constructor(
@@ -14,11 +15,16 @@ class GeocodingWeatherRepositoryImpl @Inject constructor(
     private val mapper: Mapper<GeocodingWeatherDto, List<GeocodingWeather>>
 ) : GeocodingWeatherRepository {
     override suspend fun getGeocoding(name: String): Response<List<GeocodingWeather>> = withContext(Dispatchers.IO){
+        val locale = when(Locale.getDefault().language){
+            "ru" -> "ru"
+            else -> "en"
+        }
         val geocodingOptions = hashMapOf<String, String>()
         geocodingOptions["name"] = name
         geocodingOptions["count"] = "50"
         geocodingOptions["format"] = "json"
         geocodingOptions["language"] = "en"
+        geocodingOptions["language"] = locale
 
         val geocodingResponse = geocodingWeatherService.getGeocoding(geocodingOptions)
         return@withContext if (geocodingResponse.isSuccessful){

@@ -12,5 +12,6 @@ data class Current(
     val precipitation: Precipitation,
     val humidity: Int,
     val dewPoint: Int,
-    val feelsLike: Int
+    val feelsLike: Int,
+    val icon: Int
 )

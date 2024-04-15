@@ -20,6 +20,7 @@ import com.example.weatherappcompose.ui.screens.settings.model.WindSpeedUnit.MS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
+import java.util.Locale
 import javax.inject.Inject
 
 
@@ -33,6 +34,10 @@ class WeatherRepositoryImpl @Inject constructor(
 
     override suspend fun getWeather(geo: Geo): Response<Weather> =
         withContext(Dispatchers.IO) {
+            val locale = when(Locale.getDefault().language){
+                "ru" -> "ru_RU"
+                else -> "en_US"
+            }
             val settings = settingsRepository.getSettings()
             val temperatureUnit = when(settings.temperatureUnit){
                 C -> null
@@ -74,6 +79,7 @@ class WeatherRepositoryImpl @Inject constructor(
             geocodingOptions["geocode"] = "${geo.long}, ${geo.lat}"
             geocodingOptions["format"] = "json"
             geocodingOptions["results"] = "1"
+            geocodingOptions["lang"] = locale
 
             val forecastDeferred = async{
                 weatherService.getForecastWeather(weatherOptions)

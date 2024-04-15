@@ -44,9 +44,49 @@
     <string name="f">"°F"</string>
 
     <string name="settings">Настройки</string>
+    <string name="weather">Погода</string>
 
     <string name="units">Единицы измерения</string>
     <string name="temperature">Температура</string>
     <string name="wind_speed">Скорость ветра</string>
     <string name="precipitation">Осадки</string>
+
+    <string name="low_uv">Низкий</string>
+    <string name="moderate_uv">Умеренный</string>
+    <string name="high_uv">Высокий</string>
+    <string name="very_high_uv">Очень высокий</string>
+    <string name="extreme_uv">Экстремальный</string>
+    <string name="error_uv">Ошибка</string>
+
+    <string name="good_air_quality">Хорошее</string>
+    <string name="medium_air_quality">Среднее</string>
+    <string name="slightly_harmful_air_quality">Незначительно вредное</string>
+    <string name="harmful_air_quality">Вредное</string>
+    <string name="very_harmful_air_quality">Очень вредное</string>
+    <string name="extremely_air_quality">Крайне вредное</string>
+
+    <string name="search_city">Поиск города</string>
+    <string name="reload">Обновить</string>
+    <string name="error">Ошибка</string>
+
+    <string name="hourly_forecast">Почасовой прогноз</string>
+    <string name="weekly_forecast">Недельный прогноз</string>
+
+    <string name="see_more">Посмотреть больше</string>
+    <string name="feels_like_bottom">Аналогично фактической температуре</string>
+
+    <string name="air_quality_header">КАЧЕСТВО ВОЗДУХА</string>
+    <string name="feels_like_header">ОЩУЩАЕТСЯ</string>
+    <string name="humidity_header">ВЛАЖНОСТЬ</string>
+    <string name="humidity_bottom">Точка росы сейчас составляет %1$s</string>
+    <string name="rainfall_header">ОСАДКИ</string>
+    <string name="rainfall_bottom1">за последний час</string>
+    <string name="rainfall_bottom2">" ожидается в следующие 24 часа."</string>
+    <string name="sunrise_header">ВОСХОД</string>
+    <string name="sunset_bottom">Закат: %1$s</string>
+    <string name="uv_index_header">УФ ИНДЕКС</string>
+    <string name="wind_header">ВЕТЕР</string>
+
+    <string name="app_widget_name">Погода</string>
+
 </resources>

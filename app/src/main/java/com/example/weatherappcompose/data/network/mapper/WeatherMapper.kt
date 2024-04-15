@@ -13,6 +13,7 @@ import com.example.weatherappcompose.domain.weather.model.Precipitation
 import com.example.weatherappcompose.domain.weather.model.Sun
 import com.example.weatherappcompose.domain.weather.model.Weather
 import com.example.weatherappcompose.domain.weather.model.Wind
+import com.example.weatherappcompose.ui.utils.ext.getIconFromCode
 import com.example.weatherappcompose.ui.utils.ext.getWeatherCodeDescription
 import javax.inject.Inject
 
@@ -47,7 +48,8 @@ class WeatherMapper @Inject constructor(
             ),
             humidity = entity.forecast.current.relative_humidity_2m,
             dewPoint = entity.forecast.hourly.dew_point_2m.first().toInt(),
-            feelsLike = entity.forecast.current.apparent_temperature.toInt()
+            feelsLike = entity.forecast.current.apparent_temperature.toInt(),
+            icon = getIconFromCode(entity.forecast.current.weather_code, entity.forecast.current.is_day),
         ),
         daily = dailyForecastMapper.transform(entity.forecast.daily),
         hourly = hourlyForecastMapper.transform(entity.forecast.hourly)
